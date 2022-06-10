@@ -7,7 +7,7 @@ mkdir build
 cd build
 
 cmake ..
-cmake --build . 
+cmake --build . --target check 
 
 echo
 ./lit-cpp-add
