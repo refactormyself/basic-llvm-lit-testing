@@ -1,59 +1,15 @@
-  cmake_minimum_required(VERSION 3.13.4)
-  project(standalone-toy-dialect LANGUAGES CXX C)
+cmake_minimum_required(VERSION 3.13.4)
+project(lit-py-cmake LANGUAGES CXX C)
 
-  set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
+set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard to conform to")
 
-  set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard to conform to")
-
-  find_package(LLVM REQUIRED CONFIG)
-
-  # message(STATUS "Using MLIRConfig.cmake in: ${MLIR_DIR}")
-  message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
-
-  set(LLVM_RUNTIME_OUTPUT_INTDIR ${CMAKE_BINARY_DIR}/bin)
-  set(LLVM_LIBRARY_OUTPUT_INTDIR ${CMAKE_BINARY_DIR}/lib)
-  # set(MLIR_BINARY_DIR ${CMAKE_BINARY_DIR})
-
-  # list(APPEND CMAKE_MODULE_PATH "${MLIR_CMAKE_DIR}")
-  list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
-  # include(TableGen)
-  include(AddLLVM)
-  # include(AddMLIR)
-  # include(HandleLLVMOptions)
-  # include(MLIRDetectPythonEnv)
-
-  # if(MLIR_ENABLE_BINDINGS_PYTHON)
-  #   include(MLIRDetectPythonEnv)
-  #   mlir_configure_python_dev_packages()
-  # endif()
-
-  include_directories(${LLVM_INCLUDE_DIRS})
-  # include_directories(${MLIR_INCLUDE_DIRS})
-  include_directories(${PROJECT_SOURCE_DIR}/include)
-  include_directories(${PROJECT_BINARY_DIR}/include)
-
-  link_directories(${LLVM_BUILD_LIBRARY_DIR})
-  add_definitions(${LLVM_DEFINITIONS})
-  # add_definitions(${MLIR_DEFINITIONS})
-
-  set(LLVM_LINK_COMPONENTS
-    Core
-    Support
-    nativecodegen
-    OrcJIT
-  )
-
-  add_executable(lit-cpp-add
+add_executable(lit-cpp-add
   src/add_123.cpp
-  )
+)
 
-  add_executable(lit-cpp-mul
+add_executable(lit-cpp-mul
   src/mul_123.cpp
-  )
+)
 
-  if(NOT LLVM_ENABLE_RTTI)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
-  endif()
-
-
-  add_subdirectory(test)
+add_subdirectory(test)
